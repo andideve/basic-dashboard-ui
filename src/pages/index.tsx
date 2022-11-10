@@ -60,9 +60,9 @@ export default function Home() {
   };
 
   return (
-    <Page>
+    <Page className="flex flex-col justify-center lg:pb-12">
       <Section>
-        <div className="max-w-md my-8 lg:mt-[8.6875rem] mx-auto">
+        <div className="max-w-md mx-auto">
           <header className="mb-8 text-center">
             <Typography as="h2" size="3xl" className="font-bold">
               Sign in to {siteMetadata.title}

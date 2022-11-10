@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box } from '@andideve/design-system';
 import { FiGrid, FiBell, FiSettings, FiHelpCircle, FiFile, FiUser, FiTrash } from 'react-icons/fi';
+import clsx from 'clsx';
 
-import Page from '../../page';
+import Page from '../page';
 import Sidebar from '@/containers/organisms/sidebar';
-import { UI } from '@/config/constants';
+import { Topbar, TopbarProps } from '@/containers/organisms/topbar';
+import { SITE_PATHS, UI } from '@/config/constants';
 import { MenuGroup } from '@/types/defaults';
 
-export { Section } from '../../page';
+export { Section } from '../page';
 
 const menuGroups: MenuGroup[] = [
   {
@@ -28,8 +31,16 @@ const menuGroups: MenuGroup[] = [
   },
 ];
 
-export default function DashboardPage({ children }: { children?: React.ReactNode }) {
+export default function PageDashboard({
+  children,
+  topbar,
+}: {
+  children?: React.ReactNode;
+  topbar?: TopbarProps;
+}) {
   const [sidebarCollapse, setSidebarCollapse] = useState(false);
+
+  const router = useRouter();
 
   const onWindowResize = () => {
     setSidebarCollapse(window.document.documentElement.clientWidth <= 576);
@@ -43,15 +54,20 @@ export default function DashboardPage({ children }: { children?: React.ReactNode
     };
   }, []);
 
+  const handleLogout = useCallback(() => {
+    router.replace(SITE_PATHS.loginDashboard);
+  }, []);
+
   return (
     <Page>
       <Sidebar
         menuGroups={menuGroups}
         user={{
-          displayName: 'Andi',
-          images: [{ width: 128, url: '/images/default_avatars/3.png' }],
+          displayName: 'null',
+          images: [{ width: 128, url: UI.defaultAvatar }],
         }}
         collapse={sidebarCollapse}
+        onLogout={handleLogout}
         className="fixed inset-y-0 left-0 z-[999]"
       />
       <Box
@@ -59,6 +75,11 @@ export default function DashboardPage({ children }: { children?: React.ReactNode
         ml={sidebarCollapse ? UI.sidebarCollapseWidth : UI.sidebarWidth}
         style={{ transition: `margin-left ${UI.sidebarDuration}ms ease` }}
       >
+        {topbar && (
+          <Topbar className={clsx('sticky top-0 z-[999]', topbar.className)}>
+            {topbar.children}
+          </Topbar>
+        )}
         {children}
       </Box>
     </Page>

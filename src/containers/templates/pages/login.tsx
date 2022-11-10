@@ -1,20 +1,27 @@
+import Link from 'next/link';
 import React from 'react';
 import { Button, Typography } from '@andideve/design-system';
 
-import Page from '../../page';
+import Page from '../page';
 import Topbar from '@/containers/organisms/topbar';
-import Logo from '@/components/atoms/icons/logo';
-import { siteMetadata } from '../../../../_data/app';
+import Logo from '@/components/atoms/logo';
+import { siteMetadata } from 'src/_data/app';
 
-export { Section } from '../../page';
+export { Section } from '../page';
 
-export default function LoginPage({ children }: { children?: React.ReactNode }) {
+export default function PageLogin({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return (
     <Page>
       <Topbar className="sticky top-0 flex items-center justify-between z-[999]">
-        <div className="px-2">
+        <Link href="/" className="block px-2">
           <Logo className="w-6 h-6" />
-        </div>
+        </Link>
         <div className="flex items-center">
           <Typography as="span" size="sm" className="mr-4">
             New to {siteMetadata.title}?
@@ -24,7 +31,7 @@ export default function LoginPage({ children }: { children?: React.ReactNode }) 
           </Button>
         </div>
       </Topbar>
-      <main>{children}</main>
+      <main className={className}>{children}</main>
     </Page>
   );
 }

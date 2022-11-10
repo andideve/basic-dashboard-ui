@@ -1,18 +1,22 @@
 import type { CSSObject } from '@emotion/react';
 import type { Theme } from '@andideve/design-system';
 
-const global = ({ config: { colorMode }, colors }: Theme): CSSObject => ({
-  '::-webkit-scrollbar': {
-    width: 16,
-  },
-  '::-webkit-scrollbar-track': {
-    background: colors.background.primary,
-  },
-  '::-webkit-scrollbar-thumb': {
-    border: '4px solid',
-    borderColor: colors.background.primary,
-    borderRadius: 9999,
-    backgroundColor: colorMode === 'dark' ? colors.gray[1] : 'hsl(0, 0%, 76%)',
+const global = ({ colors }: Theme): CSSObject => ({
+  body: {
+    fontFamily: String([
+      '"Inter"',
+      'system-ui',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      "'Open Sans'",
+      "'Helvetica Neue'",
+      'sans-serif',
+    ]),
   },
   '#__next': {
     display: 'flex',
@@ -26,6 +30,9 @@ const global = ({ config: { colorMode }, colors }: Theme): CSSObject => ({
     margin: '1.5rem 0',
     borderTop: '1px solid',
     borderColor: colors.separator.default,
+  },
+  strong: {
+    fontWeight: 600,
   },
 });
 
